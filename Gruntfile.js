@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  "use strict";
   grunt.initConfig({
     requirejs: {
       amd: {
@@ -31,11 +32,13 @@ module.exports = function(grunt) {
           findNestedDependencies: true
         }
       },
+      
       options: {
         optimize: "uglify",
         mainConfigFile: "require.config.js",
         useStrict: false,
         removeCombined: false,
+        /*jshint camelcase:false*/
         uglify: {
           toplevel: false,
           ascii_only: true,
@@ -44,9 +47,40 @@ module.exports = function(grunt) {
           no_mangle: true
         }
       }
+    },
+    connect: {
+      test: {
+        port: 8000
+      }
+    },
+    jasmine: {
+      src: 'library-name/**/*.js',
+      options: {
+        specs: 'test/specs/**/*Spec.js',
+        helpers: 'test/sepcs/**/*Helper.js',
+        host: 'http://127.0.0.1:8000/',
+        template: require('grunt-template-jasmine-requirejs'),
+        templateOptions: {
+          requireConfigFile: 'require.config.js'
+        }
+      }
+    },
+    jshint: {
+      all: [
+        'Gruntfile.js',
+        'library-name/**/*.js',
+        'test/spec/**/*.js'
+      ],
+      options: {
+        jshintrc: '.jshintrc'
+      }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('default', ['requirejs']);
-}
+  grunt.registerTask('test', ['jshint', 'connect:test', 'jasmine']);
+  grunt.registerTask('build', ['test', 'requirejs']);
+};
