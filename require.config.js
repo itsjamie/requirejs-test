@@ -1,8 +1,13 @@
 require.config({
-  paths: {
-
+  "paths": {
+    "underscore": "../vendor/lodash",
+    "jquery": "../vendor/jquery",
+    "backbone": "../vendor/backbone"
   },
-  shim: {
-    
+  "shim": {
+    "backbone": {
+      exports: "Backbone",
+      deps: ['jquery', 'underscore']
+    }
   }
 });

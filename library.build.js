@@ -4,8 +4,6 @@
  *
  * THIS BUILD FILE WILL NOT WORK. It is referencing paths that probably
  * do not exist on your machine. Just use it as a guide.
- *
- *
  */
 ({
     //The top level directory that contains your app. If this option is used
@@ -15,13 +13,13 @@
     //then all the files from the app directory will be copied to the dir:
     //output area, and baseUrl will assume to be a relative path under
     //this directory.
-    appDir: "library-name",
+    //appDir: "library-name",
 
     //By default, all modules are located relative to this path. If baseUrl
     //is not explicitly set, then all modules are loaded relative to
     //the directory that holds the build file. If appDir is set, then
     //baseUrl should be specified as relative to the appDir.
-    baseUrl: "./",
+    baseUrl: "./library-name",
 
     //By default all the configuration for optimization happens from the command
     //line or by properties in the config file, and configuration that was
@@ -31,27 +29,7 @@
     //in a separate configuration, set this property to the location of that
     //main JS file. The first requirejs({}), require({}), requirejs.config({}),
     //or require.config({}) call found in that file will be used.
-    //mainConfigFile: '../some/path/to/main.js',
-
-    //Set paths for modules. If relative paths, set relative to baseUrl above.
-    //If a special value of "empty:" is used for the path value, then that
-    //acts like mapping the path to an empty file. It allows the optimizer to
-    //resolve the dependency to path, but then does not include it in the output.
-    //Useful to map module names that are to resources on a CDN or other
-    //http: URL when running in the browser and during an optimization that
-    //file should be skipped because it has no dependencies.
-    paths: {
-        
-    },
-
-    //Configure CommonJS packages. See http://requirejs.org/docs/api.html#packages
-    //for more information.
-    packages: [],
-
-    //The directory path to save the output. If not specified, then
-    //the path will default to be a directory called "build" as a sibling
-    //to the build file. All relative paths are relative to the build file.
-    dir: "../some/path",
+    //mainConfigFile: 'require.config.js',
 
     //If shim config is used in the app during runtime, duplicate the config
     //here. Necessary if shim config is used, so that the shim's dependencies
@@ -151,37 +129,6 @@
         no_mangle: true
     },
 
-    //If using UglifyJS for script optimization, these config options can be
-    //used to pass configuration values to UglifyJS.
-    //For possible values see:
-    //http://lisperator.net/uglifyjs/codegen
-    //http://lisperator.net/uglifyjs/compress
-    uglify2: {
-        //Example of a specialized config. If you are fine
-        //with the default options, no need to specify
-        //any of these properties.
-        output: {
-            beautify: true
-        },
-        compress: {
-            sequences: false,
-            global_defs: {
-                DEBUG: false
-            }
-        },
-        warnings: true,
-        mangle: false
-    },
-
-    //If using Closure Compiler for script optimization, these config options
-    //can be used to configure Closure Compiler. See the documentation for
-    //Closure compiler for more information.
-    closure: {
-        CompilerOptions: {},
-        CompilationLevel: 'SIMPLE_OPTIMIZATIONS',
-        loggingLevel: 'WARNING'
-    },
-
     //Allow CSS optimizations. Allowed values:
     //- "standard": @import inlining, comment removal and line returns.
     //Removing line returns may have problems in IE, depending on the type
@@ -194,22 +141,6 @@
     //returns. (r.js 1.0.8+)
     optimizeCss: "standard.keepLines",
 
-    //If optimizeCss is in use, a list of of files to ignore for the @import
-    //inlining. The value of this option should be a string of comma separated
-    //CSS file names to ignore (like 'a.css,b.css'. The file names should match
-    //whatever strings are used in the @import calls.
-    cssImportIgnore: null,
-
-    //cssIn is typically used as a command line option. It can be used
-    //along with out to optimize a single CSS file.
-    cssIn: "path/to/main.css",
-    out: "path/to/css-optimized.css",
-
-    //If "out" is not in the same directory as "cssIn", and there is a relative
-    //url() in the cssIn file, use this to set a prefix URL to use. Only set it
-    //if you find a problem with incorrect relative URLs after optimization.
-    cssPrefix: "",
-
     //Inlines the text for any text! dependencies, to avoid the separate
     //async XMLHttpRequest calls to load those dependencies.
     inlineText: true,
@@ -219,67 +150,6 @@
     //process and give errors on code for ES5 strict mode,
     //and there is a lot of legacy code that will not work in strict mode.
     useStrict: false,
-
-    //Specify build pragmas. If the source files contain comments like so:
-    //>>excludeStart("fooExclude", pragmas.fooExclude);
-    //>>excludeEnd("fooExclude");
-    //Then the comments that start with //>> are the build pragmas.
-    //excludeStart/excludeEnd and includeStart/includeEnd work, and the
-    //the pragmas value to the includeStart or excludeStart lines
-    //is evaluated to see if the code between the Start and End pragma
-    //lines should be included or excluded. If you have a choice to use
-    //"has" code or pragmas, use "has" code instead. Pragmas are harder
-    //to read, but they can be a bit more flexible on code removal vs.
-    //has-based code, which must follow JavaScript language rules.
-    //Pragmas also remove code in non-minified source, where has branch
-    //trimming is only done if the code is minified via UglifyJS or
-    //Closure Compiler.
-    pragmas: {
-        fooExclude: true
-    },
-
-    //Same as "pragmas", but only applied once during the file save phase
-    //of an optimization. "pragmas" are applied both during the dependency
-    //mapping and file saving phases on an optimization. Some pragmas
-    //should not be processed during the dependency mapping phase of an
-    //operation, such as the pragma in the CoffeeScript loader plugin,
-    //which wants the CoffeeScript compiler during the dependency mapping
-    //phase, but once files are saved as plain JavaScript, the CoffeeScript
-    //compiler is no longer needed. In that case, pragmasOnSave would be used
-    //to exclude the compiler code during the save phase.
-    pragmasOnSave: {
-        //Just an example
-        excludeCoffeeScript: true
-    },
-
-    //Allows trimming of code branches that use has.js-based feature detection:
-    //https://github.com/phiggins42/has.js
-    //The code branch trimming only happens if minification with UglifyJS or
-    //Closure Compiler is done. For more information, see:
-    //http://requirejs.org/docs/optimization.html#hasjs
-    has: {
-        'function-bind': true,
-        'string-trim': false
-    },
-
-    //Similar to pragmasOnSave, but for has tests -- only applied during the
-    //file save phase of optimization, where "has" is applied to both
-    //dependency mapping and file save phases.
-    hasOnSave: {
-        'function-bind': true,
-        'string-trim': false
-    },
-
-    //Allows namespacing requirejs, require and define calls to a new name.
-    //This allows stronger assurances of getting a module space that will
-    //not interfere with others using a define/require AMD-based module
-    //system. The example below will rename define() calls to foo.define().
-    //See http://requirejs.org/docs/faq-advanced.html#rename for a more
-    //complete example.
-    namespace: 'foo',
-
-    //Skip processing for pragmas.
-    skipPragmas: false,
 
     //If skipModuleInsertion is false, then files that do not use define()
     //to define modules will get a define() placeholder inserted for them.
@@ -303,7 +173,7 @@
     //normalize() method). In those cases, an AMD loader just needs to know
     //that the module has a definition. These small stubs can be used instead of
     //including the full source for a plugin.
-    stubModules: ['text', 'bar'],
+    stubModules: ['jquery', 'underscore', 'backbone'],
 
     //If it is not a one file optimization, scan through all .js files in the
     //output directory for any plugin resource dependencies, and if the plugin
@@ -323,106 +193,18 @@
 
     //If set to true, any files that were combined into a build bundle will be
     //removed from the output folder.
-    removeCombined: false,
-
-    //List the modules that will be optimized. All their immediate and deep
-    //dependencies will be included in the module's file when the build is
-    //done. If that module or any of its dependencies includes i18n bundles,
-    //only the root bundles will be included unless the locale: section is set above.
-    modules: [
-        //Just specifying a module name means that module will be converted into
-        //a built file that contains all of its dependencies. If that module or any
-        //of its dependencies includes i18n bundles, they may not be included in the
-        //built file unless the locale: section is set above.
-        {
-            name: "foo/bar/bop",
-
-            //For build profiles that contain more than one modules entry,
-            //allow overrides for the properties that set for the whole build,
-            //for example a different set of pragmas for this module.
-            //The override's value is an object that can
-            //contain any of the other build options in this file.
-            override: {
-                pragmas: {
-                    fooExclude: true
-                }
-            }
-        },
-
-        //This module entry combines all the dependencies of foo/bar/bop and foo/bar/bee
-        //and any of their dependencies into one file.
-        {
-            name: "foo/bar/bop",
-            include: ["foo/bar/bee"]
-        },
-
-        //This module entry combines all the dependencies of foo/bar/bip into one file,
-        //but excludes foo/bar/bop and its dependencies from the built file. If you want
-        //to exclude a module that is also another module being optimized, it is more
-        //efficient if you define that module optimization entry before using it
-        //in an exclude array.
-        {
-            name: "foo/bar/bip",
-            exclude: [
-                "foo/bar/bop"
-            ]
-        },
-
-        //This module entry shows how to specify a specific module be excluded
-        //from the built module file. excludeShallow means just exclude that
-        //specific module, but if that module has nested dependencies that are
-        //part of the built file, keep them in there. This is useful during
-        //development when you want to have a fast bundled set of modules, but
-        //just develop/debug one or two modules at a time.
-        {
-            name: "foo/bar/bin",
-            excludeShallow: [
-                "foo/bar/bot"
-            ]
-        },
-
-        //This module entry shows the use insertRequire (first available in 2.0):
-        //if the target module only calls define and does not call require()
-        //at the top level, and this build output is used with an AMD shim
-        //loader like almond, where the data-main script in the HTML page is
-        //replaced with just a script to the built file, if there is no
-        //top-level require, no modules will execute. specify insertRequire to
-        //have a require([]) call placed at the end of the file to trigger the
-        //execution of modules. More detail at
-        //https://github.com/jrburke/almond
-        //Note that insertRequire does not affect or add to the modules
-        //that are built into the build bundle. It just adds a require([])
-        //call to the end of the built file for use during the runtime
-        //execution of the built code.
-        {
-            name: "foo/baz",
-            insertRequire: ["foo/baz"]
-        }
-    ],
+    removeCombined: true,
 
     //If you only intend to optimize a module (and its dependencies), with
     //a single file as the output, you can specify the module options inline,
     //instead of using the 'modules' section above. 'exclude',
     //'excludeShallow', 'include' and 'insertRequire' are all allowed as siblings
     //to name. The name of the optimized file is specified by 'out'.
-    name: "foo/bar/bop",
-    include: ["foo/bar/bee"],
-    insertRequire: ['foo/bar/bop'],
-    out: "path/to/optimized-file.js",
-
-    //An alternative to "include". Normally only used in a requirejs.config()
-    //call for a module used for mainConfigFile, since requirejs will read
-    //"deps" during runtime to do the equivalent of require(deps) to kick
-    //off some module loading.
-    deps: ["foo/bar/bee"],
-
-    //In RequireJS 2.0, "out" can be a function. For single JS file
-    //optimizations that are generated by calling requirejs.optimize(),
-    //using an out function means the optimized contents are not written to
-    //a file on disk, but instead pass to the out function:
-    out: function (text) {
-        //Do what you want with the optimized text here.
-    },
+    name: "library-name",
+    //dir: "dist/",
+    // include: ["foo/bar/bee"],
+    // insertRequire: ['foo/bar/bop'],
+    // out: "dist/library-name.js",
 
     //Wrap any build bundle in a start and end text specified by wrap.
     //Use this to encapsulate the module code so that define/require are
@@ -433,41 +215,6 @@
         start: "(function() {",
         end: "}());"
     },
-
-    //Another way to use wrap, but uses default wrapping of:
-    //(function() { + content + }());
-    wrap: true,
-
-    //Another way to use wrap, but uses file paths. This makes it easier
-    //to have the start text contain license information and the end text
-    //to contain the global variable exports, like
-    //window.myGlobal = requirejs('myModule');
-    //File paths are relative to the build file, or if running a commmand
-    //line build, the current directory.
-    wrap: {
-        startFile: "parts/start.frag",
-        endFile: "parts/end.frag"
-    },
-
-    //As of r.js 2.1.0, startFile and endFile can be arrays of files, and
-    //they will all be loaded and inserted at the start or end, respectively,
-    //of the build bundle.
-    wrap: {
-        startFile: ["parts/startOne.frag", "parts/startTwo.frag"],
-        endFile: ["parts/endOne.frag", "parts/endTwo.frag"]
-    },
-
-    //When the optimizer copies files from the source location to the
-    //destination directory, it will skip directories and files that start
-    //with a ".". If you want to copy .directories or certain .files, for
-    //instance if you keep some packages in a .packages directory, or copy
-    //over .htaccess files, you can set this to null. If you want to change
-    //the exclusion rules, change it to a different regexp. If the regexp
-    //matches, it means the directory will be excluded. This used to be
-    //called dirExclusionRegExp before the 1.0.2 release.
-    //As of 1.0.3, this value can also be a string that is converted to a
-    //RegExp via new RegExp().
-    fileExclusionRegExp: /^\./,
 
     //By default, comments that have a license in them are preserved in the
     //output. However, for a larger built files there could be a lot of
@@ -497,49 +244,6 @@
         optimize: true
     },
 
-    //A function that if defined will be called for every file read in the
-    //build that is done to trace JS dependencies. This allows transforms of
-    //the content.
-    onBuildRead: function (moduleName, path, contents) {
-        //Always return a value.
-        //This is just a contrived example.
-        return contents.replace(/foo/g, 'bar');
-    },
-
-    //A function that will be called for every write to an optimized bundle
-    //of modules. This allows transforms of the content before serialization.
-    onBuildWrite: function (moduleName, path, contents) {
-        //Always return a value.
-        //This is just a contrived example.
-        return contents.replace(/bar/g, 'foo');
-    },
-
-    //A function that is called for each JS module bundle that has been
-    //completed. This function is called after all module bundles have
-    //completed, but it is called for each bundle. A module bundle is a
-    //"modules" entry or if just a single file JS optimization, the
-    //optimized JS file.
-    //Introduced in r.js version 2.1.6
-    onModuleBundleComplete: function (data) {
-        /*
-        data.name: the bundle name.
-        data.path: the bundle path relative to the output directory.
-        data.included: an array of items included in the build bundle.
-        If a file path, it is relative to the output directory. Loader
-        plugin IDs are also included in this array, but dependending
-        on the plugin, may or may not have something inlined in the
-        module bundle.
-        */
-    },
-
-    //Introduced in 2.1.3: Seed raw text contents for the listed module IDs.
-    //These text contents will be used instead of doing a file IO call for
-    //those modules. Useful is some module ID contents are dynamically
-    //based on user input, which is common in web build tools.
-    rawText: {
-        'some/id': 'define(["another/id"], function () {});'
-    },
-
     //Introduced in 2.0.2: if set to true, then the optimizer will add a
     //define(require, exports, module) {}); wrapper around any file that seems
     //to use commonjs/node module syntax (require, exports) without already
@@ -563,12 +267,11 @@
     //http://en.wikipedia.org/wiki/Conditional_comment#Conditional_comments_in_JScript
     //2) It is only useful in optimize: 'none' scenarios. The goal is to allow
     //easier built bundle debugging, which goes against minification desires.
-    useSourceUrl: true,
+    useSourceUrl: false,
 
     //Defines the loading time for modules. Depending on the complexity of the
     //dependencies and the size of the involved libraries, increasing the wait
     //interval may be required. Default is 7 seconds. Setting the value to 0
     //disables the waiting interval.
     waitSeconds: 7
-
 })
