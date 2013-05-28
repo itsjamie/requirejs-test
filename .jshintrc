@@ -1,5 +1,5 @@
 {
-  "predef": ["define"],
+  "predef": ["define", "requirejs"],
   "passfail": false,
   "maxerr": 15, 
   "browser": true,

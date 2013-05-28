@@ -11,31 +11,34 @@ module.exports = function(grunt) {
               name: "library-name"
             }
           ],
+          findNestedDependencies: false,
           paths: {
             "jquery": "empty:",
             "underscore": "empty:",
             "backbone": "empty:"
           },
-          findNestedDependencies: false
         }        
       },
       global: {
         options: {
           baseUrl: "./library-name",
           insertRequire: ['library-name'],
-          exclude: ['jquery', 'underscore', 'backbone'],
           name: "../vendor/almond",
-          include: ['library-name'],
+          include: ['deps', 'library-name'],
           out: "dist/library-name.global.js",
-          stubModules: ["underscore", "backbone", "jquery"],
           wrap: true,
-          findNestedDependencies: true
+          findNestedDependencies: true,
+          paths: {
+            "jquery": "empty:",
+            "underscore": "empty:",
+            "backbone": "empty:"
+          }
         }
       },
       
       options: {
-        optimize: "uglify",
-        mainConfigFile: "require.config.js",
+        optimize: "none",
+        mainConfigFile: "library-name/library-name.js",
         useStrict: false,
         removeCombined: false,
         /*jshint camelcase:false*/
@@ -50,7 +53,14 @@ module.exports = function(grunt) {
     },
     connect: {
       test: {
-        port: 8000
+        options: {
+          port: 8000  
+        }
+      },
+      develop: {
+        options: {
+          port: 3000
+        }
       }
     },
     jasmine: {
@@ -61,7 +71,7 @@ module.exports = function(grunt) {
         host: 'http://127.0.0.1:8000/',
         template: require('grunt-template-jasmine-requirejs'),
         templateOptions: {
-          requireConfigFile: 'require.config.js'
+          requireConfigFile: 'library-name/library-name.js'
         }
       }
     },
@@ -81,6 +91,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
+  grunt.registerTask('develop', ['connect:develop:keepalive']);
   grunt.registerTask('test', ['jshint', 'connect:test', 'jasmine']);
   grunt.registerTask('build', ['test', 'requirejs']);
 };
